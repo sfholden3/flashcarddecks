@@ -5,7 +5,7 @@ import * as decksActionCreators from '../ducks/decks';
 import NewDeck from '../components/NewDeck.js';
 import { AppLoading } from 'expo';
 import { saveDeckTitle } from '../utils/api';
-import { saveNewDeck } from '../ducks/decks';
+import { decksFetched } from '../ducks/decks';
 import { connect } from 'react-redux';
 
 class NewDeckContainer extends Component {
@@ -28,18 +28,18 @@ class NewDeckContainer extends Component {
         console.log('hitting save title dispatch in the container');
         console.log('new deck: ' + newDeck);
         try {
-          dispatch(saveNewDeck(newDeck));
+          dispatch(decksFetched(newDeck));
         } catch (err) {
           console.log('error in dispatch in NewDeckContainer: ' + err);
         }
       })
       .then(() => {
         console.log('Final then: now should navigate home');
-        this.setState(() => ({ 
-          loading: false, 
-          currentTitle: '' 
+        navigation.navigate('DeckDetailContainer', { deckTitle: this.state.currentTitle });
+        this.setState(() => ({
+          loading: false,
+          currentTitle: ''
         }));
-        navigation.navigate('Home');
       });
 
     console.log('fetchedDecks: ');

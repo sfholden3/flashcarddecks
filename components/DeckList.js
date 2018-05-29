@@ -16,22 +16,22 @@ class DeckList extends Component {
   constructor(props) {
     super(props);
     console.log('constructor of DeckList');
-    console.log(props.decks)
+    console.log(props.decks);
   }
   onSelectDeck = currentDeckTitle => {
-    //this.props.navigation.navigate('DeckDetailContainer', { deckTitle: currentDeckTitle });
-    //const decks = APIFUNCS.getDecks();
-    //console.log(decks);
-
+    this.props.navigation.navigate('DeckDetailContainer', { deckTitle: currentDeckTitle });
   };
   render() {
     const { decks } = this.props;
+
     return (
       <View>
-        <Text>There are decks</Text>
-        {Object.keys(decks).map(deck => 
-        <Text key={deck}>{deck}</Text>)}
- 
+        {Object.keys(decks).map(deck => (
+          <TouchableOpacity key={deck} onPress={() => this.onSelectDeck(deck)}>
+            <Text key={[deck, 'title'].join()}>{decks[deck]['title']}</Text>
+            <Text key={[deck, 'questions'].join()}>{decks[deck]['questions'].length} cards</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     );
   }

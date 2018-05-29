@@ -11,6 +11,8 @@ import { Provider } from 'react-redux';
 import reducer from './ducks';
 import thunkMiddleware from 'redux-thunk';
 import DeckDetailContainer from './containers/DeckDetailContainer.js';
+import AddCardContainer from './containers/AddCardContainer.js';
+import QuizContainer from './containers/QuizContainer.js';
 
 const Tabs = createMaterialTopTabNavigator(
   {
@@ -59,6 +61,18 @@ const MainNavigator = createStackNavigator({
     screen: DeckDetailContainer,
     navigationOptions: {
       tabBarLabel: 'Flash Card Deck'
+    }
+  },
+  AddCardContainer: {
+    screen: AddCardContainer,
+    navigationOptions: {
+      tabBarLabel: 'Add Card'
+    }
+  },
+  QuizContainer: {
+    screen: QuizContainer,
+    navigationOptions: {
+      tabBarLabel: 'Quiz'
     }
   }
 });

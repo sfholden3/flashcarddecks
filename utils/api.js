@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { formatDecksResults, DECK_STORAGE_KEY } from './helpers';
+import { formatDecksResults, formatandSelectCurrentDeck, DECK_STORAGE_KEY } from './helpers';
 
 export function getDecks() {
   try {
@@ -10,60 +10,55 @@ export function getDecks() {
 }
 
 //getDeck: take in a single id argument and return the deck associated with that id.
-/*export function getDeck(deckTitle) {
+export function getCurrentDeck(deckTitle) {
   try {
-    return AsyncStorage.getItem(DECK_STORAGE_KEY).then(formatDecksResults);
+    return AsyncStorage.getItem(DECK_STORAGE_KEY).then(results => formatandSelectCurrentDeck(results, deckTitle));
   } catch (err) {
-    console.log('error in api/getDecks: ' + err);
+    console.log('error in api/getCurrentDeck: ' + err);
   }
-  console.log("you've hit getdeck");
-  console.log('deck to get: ' + deckTitle);
-  return AsyncStorage.getItem(DECK_STORAGE_KEY).then(results => {
-    return results === null
-      ? { title: 'no decks' }
-      : JSON.parse(results)[deckTitle] === null
-        ? { title: 'no deck with that title' }
-        : JSON.parse(results)[deckTitle];
-  });
-}*/
+}
 
 //saveDeckTitle: take in a single title argument and add it to the decks.
 
 export function saveDeckTitle(newDeckTitle) {
   console.log('save deck title! ');
   console.log(newDeckTitle);
-  try {
-  return AsyncStorage.getItem(DECK_STORAGE_KEY).then(results => {
-      console.log("we're in the then!");
-      console.log("these are the results: "+results)
-      const newDeck = {
-            [newDeckTitle]: {
-              title: newDeckTitle,
-              questions: []
-            }
-          };
-      try {
-        console.log("results with newDeck"+results != newDeck);
-      return AsyncStorage.setItem(
-          DECK_STORAGE_KEY, JSON.stringify(
-          results
-        ).then(() => {
-          console.log("we're in the result of setting the new title");
-          return JSON.parse(JSON.stringify(newDeck));
-        }));
-        console.log("we've set the new deck: "+results);
-      } catch (err) {
-        console.log('error setting new deck: ' + err);
+  return AsyncStorage.mergeItem(
+    DECK_STORAGE_KEY,
+    JSON.stringify({
+      [newDeckTitle]: {
+        title: newDeckTitle,
+        questions: []
       }
-    });
-  } catch (error) {
-    console.log('ERROR in api/saveDeckTitle getting item: ' + error);
-  }
+    })
+  ).then(() => {
+    return AsyncStorage.getItem(DECK_STORAGE_KEY).then(formatDecksResults);
+  });
 }
 
 //addCardToDeck: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.
-
-export async function addCardToDeck(deckTitle, question) {
+export function addCardToDeck(deckTitle, question) {
+  console.log('Add card to Deck ');
+  console.log(deckTitle);
+  console.log('New Question:');
+  console.log(question);
+  return AsyncStorage.getItem(DECK_STORAGE_KEY).then(results => {
+    const data = JSON.parse(results);
+    console.log('data: ');
+    console.log(data);
+    const thisDeck = data[deckTitle];
+    console.log('this deck: ');
+    console.log(thisDeck);
+    const questions = thisDeck['questions'];
+    console.log("questions");
+    console.log(questions);
+    questions.push(question);
+    return AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data)).then(() => {
+      return AsyncStorage.getItem(DECK_STORAGE_KEY).then(formatDecksResults);
+    });
+  });
+}
+/*export async function addCardToDeck(deckTitle, question) {
   await AsyncStorage.getItem(DECK_STORAGE_KEY).then(results => {
     if (results !== null) {
       const decksObj = JSON.parse(results);
@@ -75,7 +70,7 @@ export async function addCardToDeck(deckTitle, question) {
       }
     }
   });
-}
+}*/
 
 /*export function removeEntry(key) {
   return AsyncStorage.getItem(CALENDAR_STORAGE_KEY).then(results => {
