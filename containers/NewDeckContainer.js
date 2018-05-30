@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import * as decksActionCreators from '../ducks/decks';
-import NewDeck from '../components/NewDeck.js';
 import { AppLoading } from 'expo';
 import { saveDeckTitle } from '../utils/api';
 import { decksFetched } from '../ducks/decks';
 import { connect } from 'react-redux';
+import { purple, white } from '../utils/colors';
 
 class NewDeckContainer extends Component {
   static propTypes = {
@@ -53,14 +53,14 @@ class NewDeckContainer extends Component {
     }
     return (
       <View>
-        <Text>What is the title of your new deck?</Text>
+        <Text style={styles.mainItem}>What is the title of your new deck?</Text>
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
           onChangeText={currentTitle => this.setState({ currentTitle })}
           value={this.state.currentTitle}
         />
-        <TouchableOpacity onPress={this.submitNewDeck}>
-          <Text>SUBMIT</Text>
+        <TouchableOpacity style={styles.button} onPress={this.submitNewDeck}>
+          <Text style={styles.buttonText}>Create Deck</Text>
         </TouchableOpacity>
       </View>
     );
@@ -69,6 +69,25 @@ class NewDeckContainer extends Component {
 
 const mapStateToProps = decks => ({
   decks: decks.decks
+});
+
+const styles = StyleSheet.create({
+  mainItem: {
+    fontSize: 20,
+    justifyContent: 'center',
+    padding: 10
+  },
+  button: {
+    padding: 10,
+    backgroundColor: purple,
+    alignSelf: 'center',
+    borderRadius: 5,
+    margin: 20
+  },
+  buttonText: {
+    color: white,
+    fontSize: 20
+  }
 });
 
 export default connect(mapStateToProps)(NewDeckContainer);

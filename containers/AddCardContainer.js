@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import * as decksActionCreators from '../ducks/decks';
-import NewDeck from '../components/NewDeck.js';
 import { AppLoading } from 'expo';
 import { addCardToDeck } from '../utils/api';
 import { decksFetched } from '../ducks/decks';

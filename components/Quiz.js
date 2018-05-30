@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import * as decksActionCreators from '../ducks/decks';
-import NewDeck from '../components/NewDeck.js';
 import { AppLoading } from 'expo';
 import { addCardToDeck } from '../utils/api';
 import { decksFetched } from '../ducks/decks';
@@ -80,6 +79,23 @@ class Quiz extends Component {
           <View>
             <Text>You've finished the quiz!</Text>
             <Text>You answered {numberCorrect / totalQuestions * 100}% of the questions correctly!</Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                this.setState({
+                  currentQuestion: 1,
+                  questionIndex: 0,
+                  numberCorrect: 0,
+                  answerView: false
+                })
+              }>
+              <Text style={styles.buttonText}>Restart Quiz</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => this.props.navigation.navigate('DeckDetailContainer', { deckTitle: this.props.currentDeck['title'] })}>
+              <Text style={styles.buttonText}>Back to Deck</Text>
+            </TouchableOpacity>
           </View>
         )}
       </View>
