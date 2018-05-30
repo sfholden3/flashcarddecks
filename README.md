@@ -1,3 +1,5 @@
+Note: Only tested in Android Emulator
+
 This is the final project of the react nano degree and the react native course. Below you will find more detailed instructions about create react app which was used to build this project. 
 
 You should be able to run npm install, and then exp start once in the directory of this project to get started.
