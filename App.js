@@ -13,6 +13,7 @@ import thunkMiddleware from 'redux-thunk';
 import DeckDetailContainer from './containers/DeckDetailContainer.js';
 import AddCardContainer from './containers/AddCardContainer.js';
 import QuizContainer from './containers/QuizContainer.js';
+import { setLocalNotification } from './utils/helpers';
 
 const Tabs = createMaterialTopTabNavigator(
   {
@@ -96,7 +97,9 @@ export default class App extends Component {
       answer: 'BLAH'
     });
   };
-
+  componentDidMount() {
+    setLocalNotification();
+  }
   render() {
     return (
       <Provider store={createStore(reducer)}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import * as decksActionCreators from '../ducks/decks';
 import NewDeck from '../components/NewDeck.js';
@@ -8,6 +8,7 @@ import { addCardToDeck } from '../utils/api';
 import { decksFetched } from '../ducks/decks';
 import { connect } from 'react-redux';
 import { currentDeckFetched } from '../ducks/currentDeck';
+import { purple, white } from '../utils/colors';
 
 class AddCardContainer extends Component {
   static propTypes = {
@@ -72,8 +73,8 @@ class AddCardContainer extends Component {
           onChangeText={currentAnswer => this.setState({ currentAnswer })}
           value={this.state.currentAnswer}
         />
-        <TouchableOpacity onPress={this.submitNewCard}>
-          <Text>SUBMIT</Text>
+        <TouchableOpacity style={styles.button} onPress={this.submitNewCard}>
+          <Text style={styles.buttonText}>SUBMIT</Text>
         </TouchableOpacity>
       </View>
     );
@@ -82,6 +83,27 @@ class AddCardContainer extends Component {
 
 const mapStateToProps = decks => ({
   decks: decks.decks
+});
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  mainItem: {
+    fontSize: 30
+  },
+  button: {
+    padding: 10,
+    backgroundColor: purple,
+    alignSelf: 'center',
+    borderRadius: 5,
+    margin: 20
+  },
+  buttonText: {
+    color: white,
+    fontSize: 20
+  }
 });
 
 export default connect(mapStateToProps)(AddCardContainer);
