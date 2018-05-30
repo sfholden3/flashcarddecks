@@ -1,3 +1,17 @@
+Note: Only tested in Android Emulator
+
+This is the final project of the react nano degree and the react native course. Below you will find more detailed instructions about create react app which was used to build this project. 
+
+You should be able to run npm install, and then exp start once in the directory of this project to get started.
+
+Functionality of app:
+- Create Flash Card Decks, add cards to the decks, quiz yourself by selecting incorrect or correct to get a score at the end of the quiz
+- See a list of decks and how many cards are in each deck
+
+___________________________________________________________________
+Default readme info from create react app:
+
+
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
